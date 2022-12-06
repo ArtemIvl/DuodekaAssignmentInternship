@@ -1,0 +1,33 @@
+.todo-complete {
+
+}
+
+.todo-incomplete {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 20px;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #161925;
+    width: 90%;
+    height: 70px;
+    font-size: 25px;
+}
+
+.material-ui-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.material-ui-icons .icon {
+    height: 35px;
+    width: 35px;
+}
+
+.icon:hover {
+    color: gray;
+    transition: 0.1s;
+    cursor: pointer;
+}
