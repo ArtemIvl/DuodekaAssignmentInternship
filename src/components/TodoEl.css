@@ -1,33 +1,32 @@
-.todo-complete {
+.icons {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .delete-icon {
+    margin-right: 5px;
+    color: #fff;
+  }
+  
+  .edit-icon {
+    color: #fff;
+  }
 
-}
-
-.todo-incomplete {
+  .todo-row {
     display: flex;
     justify-content: space-between;
-    padding-left: 20px;
-    padding-right: 20px;
     align-items: center;
-    border: 1px solid black;
-    border-radius: 10px;
-    background-color: #161925;
-    width: 90%;
-    height: 70px;
-    font-size: 25px;
-}
+    margin: 4px auto;
+    color: #fff;
+    background: #003366;
+    padding: 16px;
+    border-radius: 5px;
+    width: 84%;
+  }
 
-.material-ui-icons {
-    display: flex;
-    gap: 15px;
-}
-
-.material-ui-icons .icon {
-    height: 35px;
-    width: 35px;
-}
-
-.icon:hover {
-    color: gray;
-    transition: 0.1s;
-    cursor: pointer;
-}
+  .complete {
+    text-decoration: line-through;
+    opacity: 0.4;
+  }

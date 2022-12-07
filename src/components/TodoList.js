@@ -1,55 +1,64 @@
-import React, {useState, useEffect, useCallback} from 'react'
-import AllTodos from './AllTodos';
-import App from '../App';
+import React, {useState, useEffect, useCallback, useContext} from 'react'
 import './TodoList.css'
+import TodoEl from './TodoEl';
+import TodoForm from './TodoForm';
+import { Context } from '../Store';
 
-const TodoList = () => {
-
-const { count } = useGlobalState();
-const [title, setTitle] = useState([]);
-var id = 0;
-
-const addTodo = () => {
-
-    // if (title || /^\s*$/.test(title))
-    // {
-    //     return;
-    // }
-
-    GlobalState.set({
-        count: count + 1
-    });
-    setTitle(''); 
-}
-
-const deleteTodo = id => {
-   // const removeArray = [...todos].filter(todo => todo.id !== id)
-   // setTodos(removeArray);
-}
-
-const editTodo = (id, updatedValue) => {
-    if (!updatedValue.text || /^\s*$/.test(updatedValue.text))
-    {
+function TodoList() {
+    const [state, setState] = useContext(Context);
+    const [todos, setTodos] = useState(state.todos);
+  
+    const addTodo = todo => {
+      if (!todo.text || /^\s*$/.test(todo.text)) {
         return;
-    }
-
-    //setTodos(prev => prev.map(item => (item.id === id ? updatedValue : item)));
-}
-
-  return (
-    <div className='todo-list'>
-        <div className='header'>TodoApp</div>
-        <input
-        type='text'
-        value={title}
-        onChange={event => setTitle(event.target.value)}
+      }
+  
+      const newTodos = [todo, ...todos];
+  
+      setTodos(newTodos);
+      setState(state.todos = todos);
+      console.log(...todos);
+    };
+  
+    const updateTodo = (todoId, newValue) => {
+      if (!newValue.text || /^\s*$/.test(newValue.text)) {
+        return;
+      }
+  
+      setTodos(prev => prev.map(item => (item.id === todoId ? newValue : item)));
+      setState(state.todos = todos);
+    };
+  
+    const removeTodo = id => {
+      const removedArr = [...todos].filter(todo => todo.id !== id);
+  
+      setTodos(removedArr);
+      setState(state.todos = todos);
+    };
+  
+    const completeTodo = id => {
+      let updatedTodos = todos.map(todo => {
+        if (todo.id === id) {
+          todo.isComplete = !todo.isComplete;
+        }
+        return todo;
+      });
+      setTodos(updatedTodos);
+      setState(state.todos = todos);
+    };
+  
+    return (
+      <>
+        <h1 className='header'>What do you need to do?</h1>
+        <TodoForm onSubmit={addTodo} />
+        <TodoEl
+          todos={todos}
+          completeTodo={completeTodo}
+          removeTodo={removeTodo}
+          updateTodo={updateTodo}
         />
-        <button onClick={() => addTodo()}>
-            Add Todo
-        </button>
-        <h1>{count}</h1>
-    </div>
-  )
-}
-
-export default TodoList;
+      </>
+    );
+  }
+  
+  export default TodoList;

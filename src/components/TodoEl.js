@@ -1,39 +1,48 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import './TodoEl.css';
-import TodoList from './TodoList';
+import { Context, useGlobalState } from '../Store';
+import TodoForm from './TodoForm';
 
-function TodoEl({title, id, completed}) {
-
-const [edit, setEdit] = useState({
+const Todo = ({ todos, completeTodo, removeTodo, updateTodo }) => {
+  const [edit, setEdit] = useState({
     id: null,
-    text: ''
-});
+    value: ''
+  });
 
-const deleteTodo = id =>
-{
-   // const removeArray = [...todos].filter(todo => todo.id !== id);
-   // setTodos(removeArray);
-}
+  const submitUpdate = value => {
+    updateTodo(edit.id, value);
+    setEdit({
+      id: null,
+      value: ''
+    });
+  };
 
-const [check, setCheck] = useState(completed);
+  if (edit.id) {
+    return <TodoForm edit={edit} onSubmit={submitUpdate} />;
+  }
 
-  return (
-  <div>
-    <li>
-        <label>
-            <input
-            type = "checkbox"
-            checked={check}
-            onChange={() => setCheck(!check)} />
-            <span>{title}</span>
-        </label>
-        <EditIcon />
-        <DeleteForeverIcon onClick={item => deleteTodo(item.id)}/>
-    </li>
-  </div>
-  )
-}
+  return todos.map((todo, index) => (
+    <div
+      className={todo.isComplete ? 'todo-row complete' : 'todo-row'}
+      key={index}
+    >
+      <div key={todo.id} onClick={() => completeTodo(todo.id)}>
+        {todo.text}
+      </div>
+      <div className='icons'>
+        <DeleteForeverIcon
+          onClick={() => removeTodo(todo.id)}
+          className='delete-icon'
+        />
+        <EditIcon
+          onClick={() => setEdit({ id: todo.id, value: todo.text })}
+          className='edit-icon'
+        />
+      </div>
+    </div>
+  ));
+};
 
-export default TodoEl;
+export default Todo;

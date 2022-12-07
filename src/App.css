@@ -4,11 +4,19 @@
 }
 
 body {
-  background-color: #04334E;
+  background-color: #003366;
 }
 
 .todo-app {
   display: flex;
-  justify-content: center;
-  margin-top: 7%;
+  flex-direction: column;
+  justify-content: start;
+  margin: auto;
+  margin-top: 80px;
+  width: 520px;
+  min-height: 600px;
+  background: #d3d3d3;
+  text-align: center;
+  border-radius: 10px;
+  padding-bottom: 32px;
 }
